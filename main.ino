@@ -70,20 +70,22 @@ void loop() {
 
  
     
+    
      if(!digitalRead(BUTTON_RED) == LOW) {
 
     
     while(!digitalRead(BUTTON_RED) == LOW) {
       delay(1000);
-      MQTT.publish(topic, "0");
-      Serial.println("0");
+      MQTT.publish(topic, "2");
+     // Serial.println(MQTT.publish(topic, "2"));
       }     
-    }else if(!digitalRead(BUTTON_BLUE) == LOW) {
+    } 
+    if(!digitalRead(BUTTON_BLUE) == LOW) {
        
       while(!digitalRead(BUTTON_BLUE) == LOW) {
         delay(1000);
         MQTT.publish(topic, "1"); 
-         Serial.println("1");
+       //  Serial.println(MQTT.publish(topic, "1"));
         }   
       }  
     
