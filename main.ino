@@ -14,11 +14,9 @@ const char *mqtt_username = "";
 const char *mqtt_password = "";
 const int mqtt_port = 1883;
 
-//CID
-const char *clientID = "ESP8266";
 
 WiFiClient WIFI;
-PubSubClient MQTT;
+PubSubClient MQTT(WIFI);
 
 
 void setup() {
@@ -38,8 +36,10 @@ void reconnect() {
   MQTT.setServer(mqtt_broker, mqtt_port);
   MQTT.setCallback(callback);
   while (!MQTT.connected()) {
+   String clientID = "esp8266";
+    clientID += String(WiFi.macAddress());
     Serial.println("Attempt to connect to MQTT broker");
-    if (MQTT.connect(clientID, mqttUser, mqttPassword )) {
+    if (MQTT.connect(clientID.c_str(), mqtt_username, mqtt_password )) {
  
       Serial.println("connected");  
  
@@ -69,9 +69,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void loop() {
 
  
-     if (!MQTT.connected()) {
-    reconnect();
-
+    
      if(!digitalRead(BUTTON_RED) == LOW) {
 
     
@@ -89,6 +87,6 @@ void loop() {
         }   
       }  
     
-  }
+  
   
 }
